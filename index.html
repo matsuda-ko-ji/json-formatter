@@ -24,35 +24,33 @@
             <h1>JSON Formatter</h1>
             <p>JSONを整形するツールです。</p>
         </section>
-        <section id="input-area">
-
-            <label for="json-input">
-                JSON入力
-            </label>
-
-            <textarea 
-                id="json-input"
-                placeholder="ここにJSONを入力してください">
-            </textarea>
-
-        </section>
+        <div class="json-layout">
+            <section id="input-area">
+                <label for="json-input">
+                    JSON入力
+                </label>
+                <textarea
+                    id="json-input"
+                    placeholder="ここにJSONを入力してください">
+                </textarea>
+            </section>
+            <section id="output-area">
+                <label for="json-output">
+                    結果
+                </label>
+                <textarea
+                    id="json-output"
+                    readonly>
+                </textarea>
+            </section>
+        </div>
         <section id="actions">
-            <button type="button" id="format-button">整形</button>
+            <button type="button" id="format-button">
+                整形
+            </button>
         </section>
-        <section id="error-area"  aria-live="polite">
-
-        </section>
-        <section id="output-area">
-
-            <label for="json-output">
-                結果
-            </label>
-
-            <textarea
-                id="json-output"
-                readonly>
-            </textarea>
-
+        <section id="error-area" aria-live="polite">
+            
         </section>
     </main>
     <!-- Footer -->
