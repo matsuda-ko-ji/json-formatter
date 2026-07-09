@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Formatter | 松田</title>
+    <title>JSON Formatter</title>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -20,12 +20,39 @@
     </header>
     <!-- Main -->
     <main>
-        <section class="container">
+        <section id="description">
             <h1>JSON Formatter</h1>
             <p>JSONを整形するツールです。</p>
-            <textarea id="jsonInput" placeholder="ここにJSONを入力してください"></textarea>
-            <button id="formatButton">整形</button>
-            <pre id="jsonOutput"></pre>
+        </section>
+        <section id="input-area">
+
+            <label for="json-input">
+                JSON入力
+            </label>
+
+            <textarea 
+                id="json-input"
+                placeholder="ここにJSONを入力してください">
+            </textarea>
+
+        </section>
+        <section id="actions">
+            <button type="button" id="format-button">整形</button>
+        </section>
+        <section id="error-area"  aria-live="polite">
+
+        </section>
+        <section id="output-area">
+
+            <label for="json-output">
+                結果
+            </label>
+
+            <textarea
+                id="json-output"
+                readonly>
+            </textarea>
+
         </section>
     </main>
     <!-- Footer -->
