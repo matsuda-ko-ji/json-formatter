@@ -2,7 +2,7 @@ const inputArea = document.getElementById("json-input");
 const outputArea = document.getElementById("json-output");
 const formatButton = document.getElementById("format-button");
 const minifyButton = document.getElementById("minify-button");
-const errorArea = document.getElementById("error-area");
+const messageArea = document.getElementById("message-area");
 
 
 formatButton.addEventListener("click", () => {
@@ -46,13 +46,13 @@ minifyButton.addEventListener("click", () => {
 
         outputArea.value = minifiedJson;
 
-        errorArea.textContent = "";
+        messageArea.textContent = "";
 
     } catch (error) {
 
         outputArea.value = "";
 
-        errorArea.textContent =
+        messageArea.textContent =
             "JSON形式が正しくありません。";
 
     }
