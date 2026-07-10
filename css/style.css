@@ -78,3 +78,19 @@ body {
 #error-area:empty {
     display: none;
 }
+
+@media (max-width: 768px) {
+
+    .json-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #actions {
+        flex-direction: column;
+    }
+
+    #actions button {
+        width: 100%;
+    }
+
+}
