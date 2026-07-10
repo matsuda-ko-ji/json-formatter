@@ -63,3 +63,18 @@ body {
 #actions button:hover {
     opacity: 0.8;
 }
+
+#error-area {
+    margin-top: 16px;
+
+    padding: 12px 16px;
+
+    border-radius: 8px;
+
+    color: #b00020;
+    background-color: #fff0f0;
+}
+
+#error-area:empty {
+    display: none;
+}
