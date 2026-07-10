@@ -37,3 +37,29 @@ body {
     border-color: #333;
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
 }
+
+#actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    margin: 32px 0;
+}
+
+#actions button {
+    padding: 12px 24px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #333;
+    color: #fff;
+
+    cursor: pointer;
+
+    transition: opacity 0.3s ease;
+}
+
+#actions button:hover {
+    opacity: 0.8;
+}
