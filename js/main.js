@@ -4,12 +4,13 @@ const formatButton = document.getElementById("format-button");
 const minifyButton = document.getElementById("minify-button");
 const copyButton = document.getElementById("copy-button");
 const messageArea = document.getElementById("message-area");
+const clearButton = document.getElementById("clear-button");
 
-
+// 整形ボタンの処理
 formatButton.addEventListener("click", () => {
-    console.log("整形ボタン押下");
+
     const jsonText = inputArea.value;
-    console.log("入力値:", jsonText);
+
     try {
 
         const jsonData = JSON.parse(jsonText);
@@ -30,6 +31,8 @@ formatButton.addEventListener("click", () => {
 
         outputArea.value = "";
 
+        copyButton.disabled = true;
+
         messageArea.textContent =
             "JSON形式が正しくありません。";
 
@@ -37,9 +40,10 @@ formatButton.addEventListener("click", () => {
 
 });
 
+// 圧縮ボタンの処理
 minifyButton.addEventListener("click", () => {
 
-    const jsonText = inputArea.value;
+    const jsonText = inputArea.value.trim();
 
     try {
 
@@ -57,6 +61,8 @@ minifyButton.addEventListener("click", () => {
 
         outputArea.value = "";
 
+        copyButton.disabled = true;
+
         messageArea.textContent =
             "JSON形式が正しくありません。";
 
@@ -64,10 +70,11 @@ minifyButton.addEventListener("click", () => {
 
 });
 
+// コピーボタンの処理
 copyButton.addEventListener("click", async () => {
 
     const outputText = outputArea.value.trim();
-    console.log("コピー対象:", outputText);
+
     if (!outputText) {
         messageArea.textContent =
             "コピーする内容がありません。";
@@ -87,5 +94,34 @@ copyButton.addEventListener("click", async () => {
             "コピーに失敗しました。";
 
     }
+
+});
+
+// クリアボタンの処理
+clearButton.addEventListener("click", () => {
+
+    const hasInput =
+        inputArea.value ||
+        outputArea.value;
+
+    if (!hasInput) {
+        return;
+    }
+
+    const confirmed = confirm(
+        "入力内容と結果を削除しますか？"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    inputArea.value = "";
+
+    outputArea.value = "";
+
+    messageArea.textContent = "";
+
+    copyButton.disabled = true;
 
 });
