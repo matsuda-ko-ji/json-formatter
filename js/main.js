@@ -124,7 +124,7 @@ clearButton.addEventListener("click", () => {
 
     outputArea.value = "";
 
-    messageArea.textContent = "";
+    clearMessage();
 
     copyButton.disabled = true;
 
