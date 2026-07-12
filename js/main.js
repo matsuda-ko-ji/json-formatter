@@ -9,7 +9,7 @@ const clearButton = document.getElementById("clear-button");
 // 整形ボタンの処理
 formatButton.addEventListener("click", () => {
 
-    const jsonText = inputArea.value;
+    const jsonText = inputArea.value.trim();
 
     try {
 
@@ -25,7 +25,7 @@ formatButton.addEventListener("click", () => {
 
         copyButton.disabled = false;
 
-        messageArea.textContent = "";
+        clearMessage();
 
     } catch (error) {
 
@@ -33,8 +33,9 @@ formatButton.addEventListener("click", () => {
 
         copyButton.disabled = true;
 
-        messageArea.textContent =
-            "JSON形式が正しくありません。";
+        showMessage(
+            "JSON形式が正しくありません。"
+        );
 
     }
 
@@ -55,7 +56,7 @@ minifyButton.addEventListener("click", () => {
 
         copyButton.disabled = false;
 
-        messageArea.textContent = "";
+        clearMessage();
 
     } catch (error) {
 
@@ -63,8 +64,9 @@ minifyButton.addEventListener("click", () => {
 
         copyButton.disabled = true;
 
-        messageArea.textContent =
-            "JSON形式が正しくありません。";
+        showMessage(
+            "JSON形式が正しくありません。"
+        );
 
     }
 
@@ -85,13 +87,15 @@ copyButton.addEventListener("click", async () => {
 
         await navigator.clipboard.writeText(outputText);
 
-        messageArea.textContent =
-            "コピーしました。";
+        showMessage(
+            "コピーしました。"
+        );
 
     } catch (error) {
 
-        messageArea.textContent =
-            "コピーに失敗しました。";
+        showMessage(
+            "コピーに失敗しました。"
+        );
 
     }
 
@@ -125,3 +129,13 @@ clearButton.addEventListener("click", () => {
     copyButton.disabled = true;
 
 });
+
+function showMessage(message) {
+    messageArea.textContent = message;
+    messageArea.style.display = "block";
+}
+
+function clearMessage() {
+    messageArea.textContent = "";
+    messageArea.style.display = "none";
+}
