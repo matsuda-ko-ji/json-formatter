@@ -3,116 +3,90 @@ const outputArea = document.getElementById("json-output");
 const formatButton = document.getElementById("format-button");
 const minifyButton = document.getElementById("minify-button");
 const copyButton = document.getElementById("copy-button");
-const messageArea = document.getElementById("message-area");
 const clearButton = document.getElementById("clear-button");
+const messageArea = document.getElementById("message-area");
 
-// 整形ボタンの処理
+const PRETTY_PRINT_INDENT = 2;
+
 formatButton.addEventListener("click", () => {
+    convertJson(PRETTY_PRINT_INDENT);
+});
 
+minifyButton.addEventListener("click", () => {
+    convertJson(0);
+});
+
+copyButton.addEventListener("click", copyOutput);
+
+clearButton.addEventListener("click", clearAll);
+
+inputArea.addEventListener("input", () => {
+    resetOutput();
+    clearMessage();
+});
+
+/**
+ * 入力されたJSONを解析し、整形または圧縮して出力する。
+ *
+ * @param {number} indentation インデント幅
+ */
+function convertJson(indentation) {
     const jsonText = inputArea.value.trim();
 
+    if (!jsonText) {
+        resetOutput();
+        showMessage("JSONを入力してください。", "error");
+        inputArea.focus();
+        return;
+    }
+
     try {
-
         const jsonData = JSON.parse(jsonText);
-
-        const formattedJson = JSON.stringify(
+        const convertedJson = JSON.stringify(
             jsonData,
             null,
-            2
+            indentation
         );
 
-        outputArea.value = formattedJson;
-
+        outputArea.value = convertedJson;
         copyButton.disabled = false;
-
         clearMessage();
-
-    } catch (error) {
-
-        outputArea.value = "";
-
-        copyButton.disabled = true;
-
-        showMessage(
-            "JSON形式が正しくありません。"
-        );
-
+    } catch {
+        resetOutput();
+        showMessage("JSON形式が正しくありません。", "error");
     }
+}
 
-});
-
-// 圧縮ボタンの処理
-minifyButton.addEventListener("click", () => {
-
-    const jsonText = inputArea.value.trim();
-
-    try {
-
-        const jsonData = JSON.parse(jsonText);
-
-        const minifiedJson = JSON.stringify(jsonData);
-
-        outputArea.value = minifiedJson;
-
-        copyButton.disabled = false;
-
-        clearMessage();
-
-    } catch (error) {
-
-        outputArea.value = "";
-
-        copyButton.disabled = true;
-
-        showMessage(
-            "JSON形式が正しくありません。"
-        );
-
-    }
-
-});
-
-// コピーボタンの処理
-copyButton.addEventListener("click", async () => {
-
-    const outputText = outputArea.value.trim();
+/**
+ * 出力結果をクリップボードへコピーする。
+ */
+async function copyOutput() {
+    const outputText = outputArea.value;
 
     if (!outputText) {
-        messageArea.textContent =
-            "コピーする内容がありません。";
+        showMessage("コピーする内容がありません。", "error");
         return;
     }
 
     try {
-
         await navigator.clipboard.writeText(outputText);
-
-        showMessage(
-            "コピーしました。"
-        );
-
-    } catch (error) {
-
-        showMessage(
-            "コピーに失敗しました。"
-        );
-
+        showMessage("コピーしました。", "success");
+    } catch {
+        showMessage("コピーに失敗しました。", "error");
     }
+}
 
-});
+/**
+ * 入力内容と出力結果を削除する。
+ */
+function clearAll() {
+    const hasContent = inputArea.value || outputArea.value;
 
-// クリアボタンの処理
-clearButton.addEventListener("click", () => {
-
-    const hasInput =
-        inputArea.value ||
-        outputArea.value;
-
-    if (!hasInput) {
+    if (!hasContent) {
         return;
     }
 
-    const confirmed = confirm(
+    const confirmed = window.confirm(
         "入力内容と結果を削除しますか？"
     );
 
@@ -121,21 +95,34 @@ clearButton.addEventListener("click", () => {
     }
 
     inputArea.value = "";
-
-    outputArea.value = "";
-
+    resetOutput();
     clearMessage();
-
-    copyButton.disabled = true;
-
-});
-
-function showMessage(message) {
-    messageArea.textContent = message;
-    messageArea.style.display = "block";
+    inputArea.focus();
 }
 
+/**
+ * 出力欄とコピーボタンを初期状態へ戻す。
+ */
+function resetOutput() {
+    outputArea.value = "";
+    copyButton.disabled = true;
+}
+
+/**
+ * メッセージを表示する。
+ *
+ * @param {string} message 表示するメッセージ
+ * @param {"success" | "error"} type メッセージ種別
+ */
+function showMessage(message, type) {
+    messageArea.textContent = message;
+    messageArea.className = `message message--${type}`;
+}
+
+/**
+ * メッセージを削除する。
+ */
 function clearMessage() {
     messageArea.textContent = "";
-    messageArea.style.display = "none";
+    messageArea.className = "message";
 }
